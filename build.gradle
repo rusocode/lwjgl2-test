@@ -1,0 +1,30 @@
+plugins {
+    id 'application'
+}
+
+group 'com.craivet'
+version '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
+}
+
+application {
+    mainClass = 'com.craivet.Game'
+}
+
+ext.lwjglVersion = '2.9.3'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.lwjgl.lwjgl:lwjgl:$lwjglVersion"
+    implementation "org.lwjgl.lwjgl:lwjgl_util:$lwjglVersion"
+    // implementation files('native')
+    implementation "org.lwjgl.lwjgl:lwjgl-platform:$lwjglVersion" // runtimeOnly
+}
