@@ -1,6 +1,5 @@
 plugins {
     id 'application'
-    // id 'com.stehno.natives' version '0.3.1'
 }
 
 group 'com.craivet'
@@ -13,10 +12,6 @@ java {
     }
 }
 
-/* application {
-    mainClass = 'com.craivet.Game'
-} */
-
 ext.lwjglVersion = '2.9.3'
 
 repositories {
@@ -26,6 +21,13 @@ repositories {
 dependencies {
     implementation "org.lwjgl.lwjgl:lwjgl:$lwjglVersion"
     implementation "org.lwjgl.lwjgl:lwjgl_util:$lwjglVersion"
-    // implementation files('native')
-    runtimeOnly "org.lwjgl.lwjgl:lwjgl-platform:$lwjglVersion" // runtimeOnly
 }
+
+/* Agrega los nativos de windows a java.library.path (https://zouxifeng.github.io/2014/07/17/add-system-property-to-spring-boot.html)
+ * Accede a la tarea de tipo JavaExec utilizando el metodo withType() evitando la duplicacion de codigo. */
+tasks.withType(JavaExec) { // tasks.withType(SomeType).configureEach (https://blog.gradle.org/preview-avoiding-task-configuration-time)
+    // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:systemProperties
+    systemProperty "java.library.path", "native"
+}
+
+// Ver: https://stackoverflow.com/questions/29437888/using-gradle-with-native-dependencies

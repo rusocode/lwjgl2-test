@@ -40,7 +40,8 @@ public class Game {
 	public static void main(String[] args) throws LWJGLException {
 		new Game().start();
 	}
- // https://stackoverflow.com/questions/29437888/using-gradle-with-native-dependencies
+
+ 	// https://stackoverflow.com/questions/29437888/using-gradle-with-native-dependencies
 	// Ejecuta el juego
 	public void start() throws LWJGLException {
 		// Configura la pantalla
