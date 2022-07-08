@@ -1,9 +1,10 @@
 plugins {
     id 'application'
+    // id 'com.stehno.natives' version '0.3.1'
 }
 
 group 'com.craivet'
-version '0.1.0'
+version '1.0-SNAPSHOT'
 
 java {
     toolchain {
@@ -12,9 +13,9 @@ java {
     }
 }
 
-application {
+/* application {
     mainClass = 'com.craivet.Game'
-}
+} */
 
 ext.lwjglVersion = '2.9.3'
 
@@ -26,5 +27,5 @@ dependencies {
     implementation "org.lwjgl.lwjgl:lwjgl:$lwjglVersion"
     implementation "org.lwjgl.lwjgl:lwjgl_util:$lwjglVersion"
     // implementation files('native')
-    implementation "org.lwjgl.lwjgl:lwjgl-platform:$lwjglVersion" // runtimeOnly
+    runtimeOnly "org.lwjgl.lwjgl:lwjgl-platform:$lwjglVersion" // runtimeOnly
 }
