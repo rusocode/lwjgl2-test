@@ -8,26 +8,24 @@ import java.io.File;
 
 import static org.lwjgl.opengl.GL11.*;
 
-/* MONITOR -> https://github.com/mattdesl/lwjgl-basics/wiki/Display */
-
-// Terminologia:
-// - Vertice: Un punto en el espacio 2D o 3D.
-// - Primitivo: Una forma simple que consta de uno o mas vertices.
+/**
+ * Ciclo de vida tipico de una aplicacion en LWJGL.
+ * <p>
+ * Vertice: Un punto en el espacio 2D o 3D.
+ * <br>
+ * Primitivo: Una forma simple que consta de uno o mas vertices.
+ * <br>
+ * <a href="https://github.com/mattdesl/lwjgl-basics/wiki/Display">Display</a>
+ *
+ * @author Juan Debenedetti
+ */
 
 public class Game {
 
-	// Opcion para habilitar el VSync del hardware
-	public static final boolean VSYNC = true;
-
-	// Pantalla completa
-	public static final boolean FULLSCREEN = false;
-
-	// Si nuestro bucle de juego se esta ejecutando
-	protected boolean running = false;
-
-	// Ancho y alto de la ventana
 	public static final int WIDTH = 640; // 800
 	public static final int HEIGHT = 480; // 600
+	public static final boolean VSYNC = true;
+	public static final boolean FULLSCREEN = false;
 
 	// Parametros para glOrtho()
 	private final int LEFT = 0;
@@ -37,9 +35,8 @@ public class Game {
 	private final int NEAR = 1;
 	private final int FAR = -1;
 
-	/**
-	 * Ejecuta el juego.
-	 */
+	protected boolean running;
+
 	public void start() throws LWJGLException {
 		// Configura la pantalla
 		Display.setTitle("Test LWJGL");
@@ -47,6 +44,7 @@ public class Game {
 		// Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT)); // Resolucion de la pantalla
 		Display.setVSyncEnabled(VSYNC); // Si el hardware VSync esta habilitado
 		Display.setFullscreen(FULLSCREEN); // Si la pantalla completa esta habilitada
+
 		// Crea y muestra la pantalla
 		Display.create();
 
@@ -78,37 +76,35 @@ public class Game {
 
 	}
 
-	/**
-	 * Cierra la ventana implicitamente.
-	 */
+	// Cuando se cierra la ventana (metodo implicito)
 	public void exit() {
 		running = false;
 	}
 
-	/**
-	 * Configura el juego y contexto.
-	 */
+	// Configura el juego y contexto
 	protected void create() {
-
-		// glDisable(GL_DEPTH_TEST); // Los juegos 2D generalmente no requieren pruebas de profundidad
+		// Los juegos 2D generalmente no requieren pruebas de profundidad
+		// glDisable(GL_DEPTH_TEST);
 
 		// Habilita la combinacion
 		// glEnable(GL_BLEND);
 		// glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		/* Ingrese el estado requerido para modificar la proyeccion. Tenga en cuenta que, a diferencia de Java2D, el sistema de
+		/*
+		 * Ingrese el estado requerido para modificar la proyeccion. Tenga en cuenta que, a diferencia de Java2D, el sistema de
 		 * coordenadas del vertice no tiene que ser igual al espacio de coordenadas de la ventana. La invocacion a glOrtho crea
 		 * un sistema de coordenadas de vertice 2D como este:
-		 * Upper-Left: (0,0) Upper-Right: (WIDTH,0)
-		 * Bottom-Left: (0,HEIGHT) Bottom-Right: (WIDTH,HEIGHT)
-		 * Si omite la invocacion del metodo glOrtho, el espacio de coordenadas de proyeccion 2D predeterminado sera asi:
-		 * Upper-Left: (-1,+1) Upper-Right: (+1,+1)
-		 * Bottom-Left: (-1,-1) Bottom-Right: (+1,-1) */
-
-		/* Un monitor de computadora es una superficie 2D. Una escena 3D renderizada por OpenGL debe proyectarse en la pantalla
+		 */
+		// Upper-Left: (0,0) Upper-Right: (640,0)
+		// Bottom-Left: (0,480) Bottom-Right: (640,480)
+		// Si omite la invocacion del metodo glOrtho, el espacio de coordenadas de proyeccion 2D predeterminado sera asi:
+		// Upper-Left: (-1,+1) Upper-Right: (+1,+1)
+		// Bottom-Left: (-1,-1) Bottom-Right: (+1,-1)
+		/*
+		 * Un monitor de computadora es una superficie 2D. Una escena 3D renderizada por OpenGL debe proyectarse en la pantalla
 		 * de la computadora como una imagen 2D. La matriz GL_PROJECTION se utiliza para esta transformacion de proyeccion.
-		 * http://www.songho.ca/opengl/gl_projectionmatrix.html */
-
+		 * http://www.songho.ca/opengl/gl_projectionmatrix.html
+		 */
 		glMatrixMode(GL_PROJECTION); // Lente
 		// glLoadIdentity(); // Restablece cualquier matriz de proyeccion anterior
 		glOrtho(LEFT, RIGHT, BOTTOM, TOP, NEAR, FAR); // https://stackoverflow.com/questions/2571402/how-to-use-glortho-in-opengl
@@ -126,9 +122,7 @@ public class Game {
 		// ... Inicializar los recursos aqui ...
 	}
 
-	/**
-	 * Renderizado.
-	 */
+	// Renderizado -> https://www.youtube.com/watch?v=cvcAjgMUPUA
 	protected void render() {
 		// Borra el contenido 2D de la ventana (limpia la pantalla)
 		glClear(GL_COLOR_BUFFER_BIT); // https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glClear.xml
@@ -185,18 +179,15 @@ public class Game {
 
 	}
 
-	/**
-	 * Cambia el tamaño de la ventana.
-	 */
+	// Cambia el tamaño del juego
 	protected void resize() {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-		// Actualice la matriz de proyeccion aqui...
+		// ... Actualice la matriz de proyeccion aqui ...
 	}
 
-	/**
-	 * Elimina los recursos.
-	 */
+	// Elimina los recursos
 	protected void dispose() {
+		// ... Deshacerse de las texturas, etc. ...
 	}
 
 	public static void main(String[] args) throws LWJGLException {
