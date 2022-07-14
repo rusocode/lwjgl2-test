@@ -1,10 +1,7 @@
 package com.craivet;
 
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-
-import java.io.File;
+import org.lwjgl.LWJGLException;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -14,16 +11,17 @@ import static org.lwjgl.opengl.GL11.*;
  * Vertice: Un punto en el espacio 2D o 3D.
  * <br>
  * Primitivo: Una forma simple que consta de uno o mas vertices.
+ * El modelo seria un objeto en el espacio mundial/escena y la vista es la camara.
  * <br>
  * <a href="https://github.com/mattdesl/lwjgl-basics/wiki/Display">Display</a>
  *
  * @author Juan Debenedetti
  */
 
-public class Game {
+public class Display2 {
 
-	public static final int WIDTH = 640; // 800
-	public static final int HEIGHT = 480; // 600
+	public static final int WIDTH = 640;
+	public static final int HEIGHT = 480;
 	public static final boolean VSYNC = true;
 	public static final boolean FULLSCREEN = false;
 
@@ -41,7 +39,6 @@ public class Game {
 		// Configura la pantalla
 		Display.setTitle("Test LWJGL");
 		Display.setResizable(true);
-		// Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 		Display.setVSyncEnabled(VSYNC);
 		Display.setFullscreen(FULLSCREEN);
 
@@ -105,10 +102,10 @@ public class Game {
 		/* Un monitor de computadora es una superficie 2D. Una escena 3D renderizada por OpenGL debe proyectarse en la pantalla
 		 * de la computadora como una imagen 2D. La matriz GL_PROJECTION se utiliza para esta transformacion de proyeccion.
 		 * http://www.songho.ca/opengl/gl_projectionmatrix.html */
-		glMatrixMode(GL_PROJECTION); // Lente
+		glMatrixMode(GL_PROJECTION);
 		// glLoadIdentity(); // Restablece cualquier matriz de proyeccion anterior
 		glOrtho(LEFT, RIGHT, BOTTOM, TOP, NEAR, FAR);
-		glMatrixMode(GL_MODELVIEW); // Camara
+		glMatrixMode(GL_MODELVIEW);
 		// Establece claro a negro transparente
 		// glClearColor(0f, 0f, 0f, 0f);
 	}
@@ -125,18 +122,6 @@ public class Game {
 
 		/* Todas las proximas llamadas a vertices se tomaran como puntos de un cuadrilatero hasta que se llame a glEnd.
 		 * Dado que esta primitiva requiere cuatro vertices, tendremos que llamar a glVertex cuatro veces. */
-
-		/* Modo inmediato (obsoleto)
-		 * https://stackoverflow.com/questions/6733934/what-does-immediate-mode-mean-in-opengl/36166310#36166310
-		 *
-		 * La razon por la que el modo inmediato no es optimo es que la tarjeta grafica esta vinculada directamente con el flujo
-		 * de su programa. El controlador no puede decirle a la GPU que comience a renderizar antes glEnd, porque no sabe cuando
-		 * terminara de enviar datos y tambien necesita transferir esos datos (lo que solo puede hacer despues glEnd).
-		 *
-		 * En contraste con eso, si usas, por ejemplo, un objeto de buffer de vertice, llenas un buffer con datos y lo entregas a
-		 * OpenGL. Su proceso ya no posee estos datos y, por lo tanto, ya no puede modificarlos. El conductor puede confiar en
-		 * este hecho y puede (incluso especulativamente) cargar los datos siempre que el autobus este libre.
-		 * */
 
 		glBegin(GL_QUADS);
 		/* >> Los comandos glVertex se utilizan dentro de los pares glBegin/glEnd para especificar vertices de punto, linea y
@@ -178,7 +163,7 @@ public class Game {
 	}
 
 	public static void main(String[] args) throws LWJGLException {
-		new Game().start();
+		new Display2().start();
 	}
 
 }
