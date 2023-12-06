@@ -21,11 +21,16 @@ repositories {
 dependencies {
     implementation "org.lwjgl.lwjgl:lwjgl:$lwjglVersion"
     implementation "org.lwjgl.lwjgl:lwjgl_util:$lwjglVersion"
+    implementation "im.bci:pngdecoder:0.13"
+    // Como no encontre el repositorio de slick, entonces guarde el jar descargado en la carpeta lib para implementarlo desde aca usando files (es un metodo?)
+    implementation files('lib/slick-util.jar')
+    implementation files('lib/jdom-1.1.2.jar')
 }
 
 /* Agrega los nativos de windows a java.library.path (https://zouxifeng.github.io/2014/07/17/add-system-property-to-spring-boot.html)
  * Accede a la tarea de tipo JavaExec utilizando el metodo withType() evitando la duplicacion de codigo. */
-tasks.withType(JavaExec) { // tasks.withType(SomeType).configureEach (https://blog.gradle.org/preview-avoiding-task-configuration-time)
+tasks.withType(JavaExec).configureEach {
+    // tasks.withType(SomeType).configureEach (https://blog.gradle.org/preview-avoiding-task-configuration-time)
     // https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:systemProperties
     systemProperty "java.library.path", "natives/windows"
 }

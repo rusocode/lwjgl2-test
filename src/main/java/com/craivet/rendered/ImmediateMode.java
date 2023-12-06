@@ -1,4 +1,4 @@
-package com.craivet;
+package com.craivet.rendered;
 
 import javax.swing.*;
 
