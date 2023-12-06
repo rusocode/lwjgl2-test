@@ -1,10 +1,10 @@
 package com.craivet;
 
+import javax.swing.*;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-
-import javax.swing.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -48,7 +48,7 @@ public class ImmediateMode {
          * their respective colors. The glBegin method accepts a single argument that specifies how the vertices are interpreted.
          * Methods glBegin and glEnd delimit the vertices that define a primitive or a group of similar primitives. The number
          * after 'glColor' and 'glVertex' indicates the number of components (xyzw/rgba). The character after the number
-         * indicates the type of argument: d=double, f=float, i=int, b=Signed Byte, ub=Unsigned Byte. The number 2 of glVertex
+         * indicates the type of argument: d=Double, f=Float, i=Integer, b=Signed Byte, ub=Unsigned Byte. The number 2 of glVertex
          * tells you how many components the vertex will have (x and y), being a 2D model in this case. If a vertex is sent to
          * OpenGL, it binds the current color state to the vertex and draws it accordingly. Color values for doubles and floats
          * range from 0.0 to 1.0 and for unsigned bytes range from 0 to 255. */

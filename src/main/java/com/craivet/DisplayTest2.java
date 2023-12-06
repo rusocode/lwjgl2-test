@@ -1,21 +1,20 @@
 package com.craivet;
 
+import javax.swing.*;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-
-import javax.swing.*;
 
 import static org.lwjgl.opengl.GL11.*;
 
 import static com.craivet.DisplayTest.*;
 
 /**
- * Ciclo de vida de una aplicacion en LWJGL.
- * <p>
- * Vertice: Un punto en el espacio 2D o 3D.
+ * Vertex: A point in 2D or 3D space.
  * <br>
- * Primitivo: Una forma simple que consta de uno o mas vertices.
- * El modelo seria un objeto en el espacio mundial/escena y la vista es la camara.
+ * Primitive: A simple form consisting of one or more vertices.
+ * <br>
+ * Model: Object in world space/scene and the view is the camera.
  * <br>
  * <a href="https://github.com/mattdesl/lwjgl-basics/wiki/Display">Display</a>
  */
@@ -33,7 +32,7 @@ public class DisplayTest2 {
         setUpDisplay();
         setUpOpenGL();
 
-        // Call this method before running the game to set the initial size
+        // Call this method before running the application to set the initial size
         resize();
 
         while (!Display.isCloseRequested()) {

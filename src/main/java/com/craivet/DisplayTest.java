@@ -1,10 +1,10 @@
 package com.craivet;
 
+import javax.swing.*;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
-
-import javax.swing.*;
 
 /**
  * The Display class provided methods to create, display, and manage the application window. Some of the typical operations you
