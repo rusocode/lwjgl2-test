@@ -8,7 +8,7 @@ import org.lwjgl.opengl.DisplayMode;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import static com.craivet.DisplayTest.*;
+import static com.craivet.Global.*;
 
 /**
  * Render a color triangle using immediate mode.

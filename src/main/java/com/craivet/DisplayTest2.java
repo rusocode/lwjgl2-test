@@ -6,8 +6,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
-
-import static com.craivet.DisplayTest.*;
+import static com.craivet.Global.*;
 
 /**
  * Vertex: A point in 2D or 3D space.

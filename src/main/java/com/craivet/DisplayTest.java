@@ -6,6 +6,8 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import static com.craivet.Global.*;
+
 /**
  * The Display class provided methods to create, display, and manage the application window. Some of the typical operations you
  * might do with the Display class include creating a window with an OpenGL context, manipulating user input events, and updating
@@ -13,10 +15,6 @@ import org.lwjgl.opengl.DisplayMode;
  */
 
 public class DisplayTest {
-
-    public static final int FPS = 60;
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
 
     /**
      * Start the application.
