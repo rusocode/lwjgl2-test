@@ -9,11 +9,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static com.craivet.Global.*;
 
 /**
- * Vertex: A point in 2D or 3D space.
- * <br>
- * Primitive: A simple form consisting of one or more vertices.
- * <br>
- * Model: Object in world space/scene and the view is the camera.
  * <br>
  * <a href="https://github.com/mattdesl/lwjgl-basics/wiki/Display">Display</a>
  */
