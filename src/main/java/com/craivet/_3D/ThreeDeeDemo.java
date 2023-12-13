@@ -61,8 +61,28 @@ import java.util.Random;
  * Se realiza un cambio en la configuracion, moviendo el apice del frustum de vista al origen y orientando la linea de vision a lo
  * largo del eje z negativo, una configuracion comun en aplicaciones graficas. El lienzo se desplaza una unidad lejos del origen,
  * y la caja se mueve a una nueva posicion dentro del frustum. Se recalculan las coordenadas de las esquinas de la caja,
- * destacando que las coordenadas de profundidad, tambien llamadas <b>coordenadas z</b>, son negativas, las de altura (y) tambien 
+ * destacando que las coordenadas de profundidad, tambien llamadas <b>coordenadas z</b>, son negativas, las de altura (y) tambien
  * son negativas para las esquinas inferiores, y las de ancho (x) son negativas para las esquinas a la izquierda del origen.
+ * <p>
+ * En la figura 9 del articulo <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/get-started/gentle-introduction-to-computer-graphics-programming.html">A Gentle Introduction to Computer Graphics (Programming)</a>
+ * se describe el proceso de proyeccion de puntos en un lienzo tridimensional en graficos por computadora. La figura 9 muestra un
+ * lienzo de dimensiones arbitrarias, destacando que su tamaño puede ajustarse para mostrar mas o menos de la escena.
+ * <p>
+ * Las coordenadas proyectadas de un punto fuera del rango -1 a 1 no son visibles en el lienzo, definiendo asi el <b>espacio de pantalla</b>
+ * como el area donde residen estas coordenadas proyectadas.
+ * <p>
+ * Para facilitar la manipulacion, se <b>normalizan</b> las coordenadas proyectadas en un rango [0,1], denominando a estas coordenadas
+ * normalizadas como <b>NDC</b> (Coordenadas de Dispositivo Normalizadas). Este proceso es independiente del tamaño original del lienzo,
+ * proporcionando un espacio común.
+ * <p>
+ * Se detalla como expresar estas coordenadas normalizadas en terminos de pixeles, multiplicandolas por las dimensiones de la
+ * imagen digital, que se compone de una matriz de pixeles. Las coordenadas resultantes se denominan "raster space".
+ * <br><br>
+ * <h3>Conclusion</h3>
+ * En conclusion, los graficos por computadora son principalmente matematicas aplicadas a un programa de computadora cuyo
+ * proposito es generar una imagen (fotorreal o no) a la velocidad mas rapida posible (y con la precision de la que las
+ * computadoras son capaces).
+ * 
  */
 
 public class ThreeDeeDemo {
