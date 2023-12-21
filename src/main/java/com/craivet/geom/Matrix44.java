@@ -64,11 +64,11 @@ import java.util.Arrays;
  * coeficiente "equivalente" de la columna actual de la matriz del lado derecho y sumar los productos resultantes. En pseudocodigo,
  * da algo como esto:
  * <pre>{@code
- * // multiplica los coeficientes de la fila 1 con los coeficientes de la columna 1
+ * // Multiplica los coeficientes de la fila 1 con los coeficientes de la columna 1
  * Ptransformed.x = P.x * c00 + P.y * c10 + P.z * c20
- * // multiplica los coeficientes de la fila 1 con los coeficientes de la columna 2
+ * // Multiplica los coeficientes de la fila 1 con los coeficientes de la columna 2
  * Ptransformed.y = P.x * c01 + P.y * c11 + P.z * c21
- * // multiplica los coeficientes de la fila 1 con los coeficientes de la columna 3
+ * // Multiplica los coeficientes de la fila 1 con los coeficientes de la columna 3
  * Ptransformed.z = P.x * c02 + P.y * c12 + P.z * c22
  * }</pre>
  * <br>

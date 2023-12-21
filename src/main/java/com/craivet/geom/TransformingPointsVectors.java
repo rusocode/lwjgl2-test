@@ -24,8 +24,8 @@ package com.craivet.geom;
  * P❜.y = P.x * M01 + P.y * M11 + P.z * M21
  * P❜.x = P.x * M02 + P.y * M12 + P.z * M22
  * }</pre>
- * ¿Que necesitamos para extender la matriz de rotacion para manejar tambien la traduccion? Necesitamos tener un cuarto termino a
- * la derecha para codificar la traduccion. Algo como esto:
+ * ¿Que necesitamos para extender la matriz de rotacion para manejar tambien la traslacion? Necesitamos tener un cuarto termino a
+ * la derecha para codificar la traslacion. Algo como esto:
  * <pre>{@code
  * P❜.x = P.x * M00 + P.y * M10 + P.z * M20 + Tx
  * P❜.y = P.x * M01 + P.y * M11 + P.z * M21 + Ty
@@ -104,13 +104,13 @@ package com.craivet.geom;
  * V❜.z = V.x * M02 + V.y * M12 + V.z * M22;
  * }</pre>
  * <h2>Resumen</h2>
- * Este capitulo nos enseña por que utilizamos matrices [4x4] en lugar de [3x3]. los coeficientes C30, C31 y C32 mantener los
- * valores de traduccion. Ahora que la matriz tiene un tamaño [4x4], necesitamos ampliar el tamaño del punto agregando una
+ * Este capitulo nos enseña porque utilizamos matrices [4x4] en lugar de [3x3]. Los coeficientes C30, C31 y C32 mantienen los
+ * valores de traslacion. Ahora que la matriz tiene un tamaño [4x4], necesitamos ampliar el tamaño del punto agregando una
  * coordenada adicional. Podemos hacer esto tratando implicitamente los puntos como puntos homogeneos, pero para continuar
  * usandolos en un sistema de coordenadas cartesiano (como puntos cartesianos), debemos asegurarnos de que w, esta cuarta
  * coordenada, siempre este establecida en 1. La mayoria de las veces, las matrices que usamos para transformar un punto tendran
  * su cuarta columna establecida en (0, 0, 0, 1), y con estas matrices, el valor de w' siempre debe ser 1. Sin embargo, en casos
- * especiales (matriz de proyeccion, corte transformar), el valor de w' puede ser diferente de 1, en cuyo caso necesitaras
+ * especiales (matriz de proyeccion, transformada de corte), el valor de w' puede ser diferente de 1, en cuyo caso necesitaras
  * normalizarlo (dividimos w' por si mismo), lo que requiere dividir tambien las otras coordenadas transformadas x', y' y z' por w'.
  */
 
