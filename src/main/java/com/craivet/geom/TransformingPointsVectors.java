@@ -14,22 +14,22 @@ package com.craivet.geom;
  * necesitamos sumar los valores 1, 2 y 3, respectivamente, a cada una de las coordenadas x, y, y z del punto. Es muy sencillo. A
  * partir de ahora, observaremos puntos y vectores como una matriz de tamaño 1x3.
  * <pre>{@code
- * P❜.x = P.x + Tx
- * P❜.y = P.y + Ty
- * P❜.z = P.z + Tz
+ * P'.x = P.x + Tx
+ * P'.y = P.y + Ty
+ * P'.z = P.z + Tz
  * }</pre>
  * Ahora volvamos al codigo que transforma un punto usando una matriz:
  * <pre>{@code
- * P❜.x = P.x * M00 + P.y * M10 + P.z * M20
- * P❜.y = P.x * M01 + P.y * M11 + P.z * M21
- * P❜.x = P.x * M02 + P.y * M12 + P.z * M22
+ * P'.x = P.x * M00 + P.y * M10 + P.z * M20
+ * P'.y = P.x * M01 + P.y * M11 + P.z * M21
+ * P'.x = P.x * M02 + P.y * M12 + P.z * M22
  * }</pre>
  * ¿Que necesitamos para extender la matriz de rotacion para manejar tambien la traslacion? Necesitamos tener un cuarto termino a
  * la derecha para codificar la traslacion. Algo como esto:
  * <pre>{@code
- * P❜.x = P.x * M00 + P.y * M10 + P.z * M20 + Tx
- * P❜.y = P.x * M01 + P.y * M11 + P.z * M21 + Ty
- * P❜.x = P.x * M02 + P.y * M12 + P.z * M22 + Tz
+ * P'.x = P.x * M00 + P.y * M10 + P.z * M20 + Tx
+ * P'.y = P.x * M01 + P.y * M11 + P.z * M21 + Ty
+ * P'.x = P.x * M02 + P.y * M12 + P.z * M22 + Tz
  * }</pre>
  * Recuerde que queremos desarrollar una matriz que codifique escala, rotacion y traduccion. Entonces, necesitamos hacer que Tx,
  * Ty y Tz encajen dentro del codigo de la multiplicacion de la matriz de puntos (y almacenar estos valores en algun lugar de la
@@ -37,9 +37,9 @@ package com.craivet.geom;
  * columna de la matriz. Entonces, si la columna tuviera cuatro coeficientes en lugar de tres, Tx seria M30 . Se puede hacer el
  * mismo razonamiento con Ty y Tz. Entonces obtendriamos lo siguiente:
  * <pre>{@code
- * P❜.x = P.x * M00 + P.y * M10 + P.z * M20 + M30
- * P❜.y = P.x * M01 + P.y * M11 + P.z * M21 + M31
- * P❜.x = P.x * M02 + P.y * M12 + P.z * M22 + M32
+ * P'.x = P.x * M00 + P.y * M10 + P.z * M20 + M30
+ * P'.y = P.x * M01 + P.y * M11 + P.z * M21 + M31
+ * P'.x = P.x * M02 + P.y * M12 + P.z * M22 + M32
  * }</pre>
  * Sin embargo, esto supone que nuestra matriz ahora tiene el tamaño 4x3 y no 3x3. Esto esta bien. Dijimos que las matrices podian
  * tener cualquier tamaño. Sin embargo, sabemos que la multiplicacion de matrices solo puede ser valida si sus tamaños son
@@ -49,17 +49,17 @@ package com.craivet.geom;
  * por computadora, se llama <b>punto homogeneo</b> (o punto con <b>coordenadas homogeneas</b>). Con tal punto, podemos codificar
  * facilmente la traduccion en nuestra matriz. Vea como magicamente encaja en su lugar en el siguiente codigo:
  * <pre>{@code
- * P❜.x = P.x * M00 + P.y * M10 + P.z * M20 + 1 * M30
- * P❜.y = P.x * M01 + P.y * M11 + P.z * M21 + 1 * M31
- * P❜.x = P.x * M02 + P.y * M12 + P.z * M22 + 1 * M32
+ * P'.x = P.x * M00 + P.y * M10 + P.z * M20 + 1 * M30
+ * P'.y = P.x * M01 + P.y * M11 + P.z * M21 + 1 * M31
+ * P'.x = P.x * M02 + P.y * M12 + P.z * M22 + 1 * M32
  * }</pre>
  * Esta es la teoria. Para codificar traslacion, escala y rotacion en una matriz, necesitamos tratar con puntos que tengan
  * coordenadas homogeneas. Pero como el cuarto valor es siempre 1, no lo definimos explicitamente en el codigo. En cambio, solo
  * definimos x, y y z y asumimos que hay un cuarto valor. El codigo de matriz de puntos ahora tiene este aspecto:
  * <pre>{@code
- * P❜.x = P.x * M00 + P.y * M10 + P.z * M20 * M30
- * P❜.y = P.x * M01 + P.y * M11 + P.z * M21 * M31
- * P❜.x = P.x * M02 + P.y * M12 + P.z * M22 * M32
+ * P'.x = P.x * M00 + P.y * M10 + P.z * M20 * M30
+ * P'.y = P.x * M01 + P.y * M11 + P.z * M21 * M31
+ * P'.x = P.x * M02 + P.y * M12 + P.z * M22 * M32
  * }</pre>
  * Nuestra matriz es ahora una matriz de 4x3. Pasemos de una matriz de 4x3 a nuestra matriz final de 4x4, la forma mas comunmente
  * utilizada del CG. Las cuartas columnas desempeñan un papel en la proyeccion en perspectiva y para algunos otros tipos de
@@ -77,12 +77,12 @@ package com.craivet.geom;
  * utilizar el punto como un punto cartesiano, es necesario normalizar w' dividiendolo por si mismo, lo que implica dividir las
  * otras coordenadas (x', y', z') por w'. En pseudocodigo, da algo como esto:
  * <pre>{@code
- * P❜.x = P.x * M00 + P.y * M10 + P.z * M20 + M30;
- * P❜.y = P.x * M01 + P.y * M11 + P.z * M21 + M31;
- * P❜.z = P.x * M02 + P.y * M12 + P.z * M22 + M32;
- * w❜   = P.x * M03 + P.y * M13 + P.z * M23 + M33;
- * if (w❜ != 1 && w❜ != 0) {
- *     P❜.x /= w❜, P❜.y /= w❜, P❜.z /= w❜;
+ * P'.x = P.x * M00 + P.y * M10 + P.z * M20 + M30;
+ * P'.y = P.x * M01 + P.y * M11 + P.z * M21 + M31;
+ * P'.z = P.x * M02 + P.y * M12 + P.z * M22 + M32;
+ * w'   = P.x * M03 + P.y * M13 + P.z * M23 + M33;
+ * if (w' != 1 && w' != 0) {
+ *     P'.x /= w', P'.y /= w', P'.z /= w';
  * }
  * }</pre>
  * Al transformar un punto con matrices, no es necesario declarar explicitamente la coordenada w' en el tipo de punto. Se asume
@@ -99,9 +99,9 @@ package com.craivet.geom;
  * transformar de manera similar a los puntos, podemos eliminar la parte del codigo responsable de la traduccion. El codigo
  * utilizado para transformar vectores se presenta para su comparacion con el codigo de transformacion de puntos.
  * <pre>{@code
- * V❜.x = V.x * M00 + V.y * M10 + V.z * M20;
- * V❜.y = V.x * M01 + V.y * M11 + V.z * M21;
- * V❜.z = V.x * M02 + V.y * M12 + V.z * M22;
+ * V'.x = V.x * M00 + V.y * M10 + V.z * M20;
+ * V'.y = V.x * M01 + V.y * M11 + V.z * M21;
+ * V'.z = V.x * M02 + V.y * M12 + V.z * M22;
  * }</pre>
  * <h2>Resumen</h2>
  * Este capitulo nos enseña porque utilizamos matrices [4x4] en lugar de [3x3]. Los coeficientes C30, C31 y C32 mantienen los
