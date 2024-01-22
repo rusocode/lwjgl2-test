@@ -15,9 +15,6 @@ import static com.craivet.Global.*;
 
 public class DisplayTest2 {
 
-    public static final boolean VSYNC = true;
-    public static final boolean FULLSCREEN = false;
-
     /**
      * Start the application.
      */
@@ -48,8 +45,7 @@ public class DisplayTest2 {
         try {
             Display.setTitle("Display Test 2");
             Display.setResizable(true);
-            Display.setVSyncEnabled(VSYNC);
-            Display.setFullscreen(FULLSCREEN);
+            Display.setVSyncEnabled(true);
             Display.create();
         } catch (LWJGLException e) {
             JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);

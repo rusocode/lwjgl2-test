@@ -31,7 +31,7 @@ package com.craivet.geom;
  * P'.y = P.x * M01 + P.y * M11 + P.z * M21 + Ty
  * P'.x = P.x * M02 + P.y * M12 + P.z * M22 + Tz
  * }</pre>
- * Recuerde que queremos desarrollar una matriz que codifique escala, rotacion y traduccion. Entonces, necesitamos hacer que Tx,
+ * Recuerde que queremos desarrollar una matriz que codifique escala, rotacion y traslacion. Entonces, necesitamos hacer que Tx,
  * Ty y Tz encajen dentro del codigo de la multiplicacion de la matriz de puntos (y almacenar estos valores en algun lugar de la
  * matriz). Mire la primera linea por ahora. Tenga en cuenta que para calcular x', solo utilizamos los coeficientes de la primera
  * columna de la matriz. Entonces, si la columna tuviera cuatro coeficientes en lugar de tres, Tx seria M30 . Se puede hacer el
@@ -47,7 +47,7 @@ package com.craivet.geom;
  * esto es imposible. ¿Que haremos? La solucion es sencilla. Agregaremos una columna adicional al punto para convertirlo en una
  * matriz de 1x4 y estableceremos el cuarto coeficiente de este punto en 1. Nuestro punto ahora se ve asi (x, y, z, 1). En graficos
  * por computadora, se llama <b>punto homogeneo</b> (o punto con <b>coordenadas homogeneas</b>). Con tal punto, podemos codificar
- * facilmente la traduccion en nuestra matriz. Vea como magicamente encaja en su lugar en el siguiente codigo:
+ * facilmente la traslacion en nuestra matriz. Vea como magicamente encaja en su lugar en el siguiente codigo:
  * <pre>{@code
  * P'.x = P.x * M00 + P.y * M10 + P.z * M20 + 1 * M30
  * P'.y = P.x * M01 + P.y * M11 + P.z * M21 + 1 * M31
@@ -96,7 +96,7 @@ package com.craivet.geom;
  * Los vectores son mas simples de transformar que los puntos, ya que representan la direccion sin tener una posicion definida en
  * el espacio. Dado que la posicion de los vectores no tiene sentido, no es necesario traducirlos. Nos interesa principalmente la
  * direccion y, ocasionalmente, su longitud para resolver problemas geometricos o de sombreado. Aunque los vectores se pueden
- * transformar de manera similar a los puntos, podemos eliminar la parte del codigo responsable de la traduccion. El codigo
+ * transformar de manera similar a los puntos, podemos eliminar la parte del codigo responsable de la traslacion. El codigo
  * utilizado para transformar vectores se presenta para su comparacion con el codigo de transformacion de puntos.
  * <pre>{@code
  * V'.x = V.x * M00 + V.y * M10 + V.z * M20;

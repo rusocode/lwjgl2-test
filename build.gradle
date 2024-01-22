@@ -22,7 +22,7 @@ dependencies {
     implementation "org.lwjgl.lwjgl:lwjgl:$lwjglVersion"
     implementation "org.lwjgl.lwjgl:lwjgl_util:$lwjglVersion"
     implementation "im.bci:pngdecoder:0.13"
-    // Como no encontre el repositorio de slick, entonces guarde el jar descargado en la carpeta lib para implementarlo desde aca usando files (es un metodo?)
+    // Como no encontre el repositorio de slick ni jdom, entonces guarde el jar descargado en la carpeta lib para implementarlo desde aca usando files (es un metodo?)
     implementation files('lib/slick-util.jar')
     implementation files('lib/jdom-1.1.2.jar')
 }

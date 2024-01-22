@@ -2,7 +2,7 @@ package com.craivet.geom;
 
 import java.util.Arrays;
 
-/**
+ /**
  * <h2>Matriz</h2>
  * Una matriz es una estructura matematica bidimensional compuesta por numeros, simbolos o expresiones organizadas en filas y
  * columnas. Cada elemento en una matriz se identifica por su posicion en la fila y columna correspondiente. La matriz se denota
@@ -41,7 +41,7 @@ import java.util.Arrays;
  * El truco aqui es que si podemos escribir puntos y vectores como matrices [1x3], podemos multiplicarlos por otras matrices.
  * Recuerde que la matriz <b>m x p</b> se puede multiplicar por la matriz <b>p x n</b> para obtener la matriz <b>m x n</b>. Si la
  * primera matriz es un punto, podemos escribir m = 1 y p = 3. Esto implica que la matriz <b>p x n</b> es algo de la forma 3 x n
- * donde n puede ser cualquier numero mayor que 1. En teoria, una multiplicacion de a [1x3] matriz por cualquiera de las
+ * donde n puede ser cualquier numero mayor que 1. En teoria, una multiplicacion de [1x3] matriz por cualquiera de las
  * siguientes matrices funcionaria: [3x1], [3x2], [3x3], [3x4], etc.
  * <p>
  * Necesitamos recordar dos cosas ahora para que lo que explicaremos tenga sentido. Primero, un punto multiplicado por una matriz

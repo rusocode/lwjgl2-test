@@ -26,18 +26,30 @@ import static com.craivet.Global.*;
  * el eje y positivo se extiende hacia abajo desde el origen.
  * <br><br>
  * <h2>Proyeccion en perspectiva</h2>
- *
+ * Una imagen es una representacion de una escena 3D en una superficie plana, ya sea un lienzo o una pantalla. Para crear una imagen
+ * que parezca real, se utiliza la tecnica de proyeccion en perspectiva, que implica extender lineas desde las esquinas del objeto
+ * hacia el ojo y encontrar la interseccion de estas lineas con una superficie plana perpendicular a la linea de vision. Al conectar
+ * estos puntos, se obtiene una representacion <b>alambrica</b> de la escena.
+ * <p>
+ * Una de las principales propiedades visuales importantes de este tipo de proyeccion es que un objeto se hace mas pequeño a medida
+ * que se aleja del ojo (los bordes posteriores de una caja son mas pequeños que los bordes frontales). Este efecto se llama <b>escorzo</b>.
+ * <p>
+ * En la proyeccion en perspectiva el ojo se encuentra en el centro del lienzo, lo que significa que la linea de vision siempre
+ * pasa por el centro de la imagen. El tamaño del lienzo es ajustable, y al representar el tronco de visualizacion o <b>frustum</b>,
+ * una piramide definida por lineas desde las esquinas del lienzo hacia el ojo, se ilustra como este cambio afecta el volumen de
+ * visualizacion. Modificar el tamaño del lienzo amplia o reduce este volumen, afectando asi el campo de vision de la escena
+ * capturada, comparable al ajuste de la distancia focal en la fotografia.
  * <br><br>
  * <h2>Proyeccion Ortogonal</h2>
  * En OpenGL, la proyeccion ortogonal se refiere a la transformacion que se aplica a las coordenadas tridimensionales de una
  * escena para proyectarlas en un plano bidimensional de manera ortogonal. Esto significa que las lineas de proyeccion son
- * perpendiculares al plano de proyeccion. La proyeccion ortogonal es comúnmente utilizada en situaciones donde se desea preservar
+ * perpendiculares al plano de proyeccion. La proyeccion ortogonal es comunmente utilizada en situaciones donde se desea preservar
  * las proporciones y tamaños relativos de los objetos en la escena, independientemente de su profundidad en el espacio
  * tridimensional.
  * <p>
  * En OpenGL, hay una matriz de proyeccion que se utiliza para aplicar la proyeccion. Para establecer una proyeccion ortogonal en
- * OpenGL, generalmente se usa la funcion <b>glOrtho</b>. Esta funcion toma como parametros los limites izquierdo, derecho, 
- * inferior, superior, cerca y lejano del volumen de vista ortogonal. Los objetos fuera de este volumen no seran visibles en la 
+ * OpenGL, generalmente se usa la funcion <b>glOrtho</b>. Esta funcion toma como parametros los limites izquierdo, derecho,
+ * inferior, superior, cerca y lejano del volumen de vista ortogonal. Los objetos fuera de este volumen no seran visibles en la
  * proyeccion.
  * <p>
  * Aqui hay un ejemplo simple en el que se establece una proyeccion ortogonal en OpenGL:
@@ -117,7 +129,7 @@ public class TextureDemo {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Enlaza la textura antes de renderizarla
-        // img.bind(); // TODO No parece necesario
+        img.bind();
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
@@ -133,7 +145,7 @@ public class TextureDemo {
 
     private Texture loadTexture() {
         try {
-            return TextureLoader.getTexture("PNG", Objects.requireNonNull(TextureDemo.class.getClassLoader().getResourceAsStream("textures/" + "air" + ".png")));
+            return TextureLoader.getTexture("PNG", Objects.requireNonNull(TextureDemo.class.getClassLoader().getResourceAsStream("textures/" + "grass" + ".png")));
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "No se pudo encontrar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {

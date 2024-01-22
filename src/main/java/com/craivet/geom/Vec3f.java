@@ -5,7 +5,7 @@ package com.craivet.geom;
  * Las matrices desempeñan un papel fundamental en el proceso de graficos y vera que se utilizan con regularidad en el codigo de
  * las aplicaciones 3D.
  * <p>
- * En el la clase Vec3 se menciono que era posible trasladar o rotar puntos usando operadores lineales. Por ejemplo, demostramos
+ * En la clase Vec3 se menciono que era posible trasladar o rotar puntos usando operadores lineales. Por ejemplo, demostramos
  * que podiamos traducir un punto agregando algunos valores a sus coordenadas. Tambien demostramos que era posible
  * rotar un vector usando funciones trigonometricas. Ahora, en resumen (y esto no es una definicion matematica de lo que son las
  * matrices), una matriz combina todas estas transformaciones (escala, rotacion, traslacion) en una sola estructura. Multiplicar
