@@ -1,4 +1,4 @@
-package com.craivet.ejemplos;
+package com.craivet;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -7,31 +7,32 @@ import org.lwjgl.opengl.DisplayMode;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Delta {
+/**
+ * La variable Delta representa el tiempo transcurrido desde la ultima actualizacion del cuadro. Cuanto mayor sea el Delta, menor
+ * sera la velocidad entre fotogramas. Cuanto menor sea el Delta, mayor sera la velocidad entre fotogramas. Si la velocidad de
+ * fotogramas esta limitada a 60 FPS, NUNCA deberia existir un valor Delta inferior a 16, por que lo unico que le puede pasar a
+ * nuestra velocidad de fotogramas es que disminuira.
+ */
 
-    /* En primer lugar, la hora del sistema se almacena en una variable de tipo long llamada "lastFrame". Luego, en el bucle
-     * del juego, se recupera y devuelve la cantidad de tiempo que ha pasado desde el ultimo fotograma.
-     *
-     * La variable Delta representa el tiempo transcurrido desde la ultima actualizacion del cuadro. Cuanto mayor sea el
-     * Delta, menor sera la velocidad (o cantidad?) de fotogramas. Cuanto menor sea el Delta, mayor sera la velocidad de
-     * fotogramas. Si la velocidad de fotogramas esta limitada a 60 FPS, NUNCA deberia existir un valor Delta inferior a 16,
-     * por que lo unico que le puede pasar a nuestra velocidad de fotogramas es que disminuira. */
+public class Delta {
 
     private static long lastFrame;
 
     private int x = 10, y = 10;
     private float speed = 0.1f;
 
-    /* Hora del sistema
-     *
-     * La resolucion del temporizador se define como (de los documentos LWJGL) "el numero de tics que... el temporizador
-     * hace en un segundo".
-     *
-     * Divide el valor actual del temporizador en tics (getTime) por la resolucion del temporizador para obtener el tiempo
-     * en segundos. Como quiero el tiempo en milisegundos, lo multiplico por 1000.
-     *
-     * Sys.getTime se creo para usos como LWJGL con aspectos como la precision y el rendimiento en mente.
-     * System.currentTimeMillis, sin embargo, no lo fue. Sin embargo, es mas sencillo. */
+    /**
+     * Obtiene la hora del sistema.
+     * <p>
+     * La resolucion del temporizador se define como (de los documentos LWJGL) "el numero de tics que... el temporizador hace en
+     * un segundo".
+     * <p>
+     * Divide el valor actual del temporizador en tics (getTime) por la resolucion del temporizador para obtener el tiempo en
+     * segundos. Para obtener el tiempo en milisegundos, lo multiplica por 1000.
+     * <p>
+     * Sys.getTime se creo para usos como LWJGL con aspectos como la precision y el rendimiento en mente. System.currentTimeMillis,
+     * sin embargo, no lo fue.
+     */
     private static long getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
     }

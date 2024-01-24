@@ -1,4 +1,4 @@
-package com.craivet.ejemplos;
+package com.craivet;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +34,20 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
  * En general, la mayoria de las computadoras modernas permiten texturas de al menos 4096x4096, pero si quieres estar realmente
  * seguro, puedes limitarte a 2048x2048. Si cree que va a trabajar con controladores antiguos o limitadores (o Android, iOS,
  * WebGL), es posible que desee limitarse a 1024x1024.
+ * <p>
+ * Para renderizar un objeto, necesitamos darle a OpenGL cuatro vertices (en geometria, un vertice es el punto donde se encuentran
+ * dos o mas elementos unidimensionales). Como puede ver, terminamos con un cuadrilatero 2D. Cada vertice tiene una serie de
+ * atributos, que incluyen <b>posicion</b> (x, y) y <b>coordenadas de textura</b> (s, t). Las coordenadas de textura se definen en
+ * el espacio tangente, generalmente entre 0.0 y 1.0. Estos le dicen a OpenGL donde tomar muestras de nuestros datos de textura.
+ * <p>
+ * Esto depende de que nuestro sistema de coordenadas tenga un origen en la parte superior izquierda. Algunas bibliotecas,
+ * como LibGDX, utilizaran el origen inferior izquierdo, por lo que los valores de posicion y coordenadas de textura pueden estar
+ * en un orden diferente.
+ * <p>
+ * ¿Que sucede si usamos valores de coordenadas de textura menores que 0.0 o mayores que 1.0? Aqui es donde entra en juego el modo
+ * de envoltura. Le decimos a OpenGL como manejar valores fuera de las coordenadas de textura. Los dos modos mas comunes son
+ * GL_CLAMP_TO_EDGE, que simplemente muestrea el color del borde, y GL_REPEAT, que conducira a un patron repetido. Por ejemplo, el
+ * uso de 2.0 y GL_REPEAT hara que la imagen se repita dos veces dentro del ancho y alto que especificamos.
  * <br><br>
  * Resources:
  * <a href="https://github.com/mattdesl/lwjgl-basics/wiki/Textures">Textures</a>
@@ -54,22 +68,6 @@ public class Texture {
     }
 
     public Texture(URL url, int filter) throws IOException {
-        // Wrap
-        /* Para renderizar un objeto (ej. brick), necesitamos darle a OpenGL cuatro vertices (en geometria, un vertice es el punto
-         * donde se encuentran dos o mas elementos unidimensionales). Como puede ver, terminamos con un cuadrilatero 2D. Cada
-         * vertice tiene una serie de atributos, que incluyen Posicion (x, y) y Coordenadas de textura (s, t). Las coordenadas de
-         * textura se definen en el espacio tangente, generalmente entre 0.0 y 1.0. Estos le dicen a OpenGL donde tomar muestras
-         * de nuestros datos de textura.
-         *
-         * Nota: Esto depende de que nuestro sistema de coordenadas tenga un origen en la parte superior izquierda (y-abajo).
-         * Algunas bibliotecas, como LibGDX, utilizaran el origen inferior izquierdo (y-arriba), por lo que los valores de
-         * Posicion y Coordenadas de textura pueden estar en un orden diferente.
-         *
-         * ¿Que sucede si usamos valores de coordenadas de textura menores que 0.0 o mayores que 1.0? Aqui es donde entra en juego
-         * el modo de envoltura. Le decimos a OpenGL como manejar valores fuera de las coordenadas de textura. Los dos modos mas
-         * comunes son GL_CLAMP_TO_EDGE, que simplemente muestrea el color del borde, y GL_REPEAT, que conducira a un patron
-         * repetido. Por ejemplo, el uso de 2.0 y GL_REPEAT hara que la imagen se repita dos veces dentro del ancho y alto que
-         * especificamos. */
         this(url, filter, GL_CLAMP_TO_EDGE);
     }
 

@@ -1,4 +1,4 @@
-package com.craivet.ejemplos;
+package com.craivet;
 
 import java.io.*;
 import java.util.Objects;
