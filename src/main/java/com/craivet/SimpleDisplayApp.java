@@ -40,7 +40,7 @@ public class SimpleDisplayApp {
             render();
             // Voltea los buffers y sincroniza a 60 FPS
             Display.update();
-            Display.sync(FPS);
+            Display.sync(FPS); // Sincroniza la pantalla a 60 fps (16.67 milisegundos)
         }
 
         Display.destroy();
@@ -54,8 +54,12 @@ public class SimpleDisplayApp {
             Display.setTitle("Display Test");
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.setResizable(true);
+            /* Vsync solo funciona en modo de pantalla completa, ya que las aplicaciones con ventana no tienen acceso directo ni
+             * control sobre la pantalla y el sistema operativo maneja cualquier cambio de buffer. Sin embargo, Vsync puede actuar
+             * como un limitador de velocidad de fotogramas en el modo de ventana. */
+            Display.setVSyncEnabled(true); // Elimina el desgarro de la pantalla
             // Display.setVSyncEnabled(true);
-            Display.create();
+            Display.create(); // Crea una pantalla con el modo de visualizacion y el titulo especificados
         } catch (LWJGLException e) {
             JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();

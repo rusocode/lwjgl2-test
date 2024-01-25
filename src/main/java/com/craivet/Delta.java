@@ -5,13 +5,19 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import javax.swing.*;
+
+import static com.craivet.Global.*;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
  * La variable Delta representa el tiempo transcurrido desde la ultima actualizacion del cuadro. Cuanto mayor sea el Delta, menor
- * sera la velocidad entre fotogramas. Cuanto menor sea el Delta, mayor sera la velocidad entre fotogramas. Si la velocidad de
+ * sera la velocidad de fotogramas. Cuanto menor sea el Delta, mayor sera la velocidad de fotogramas. Si la velocidad de
  * fotogramas esta limitada a 60 FPS, NUNCA deberia existir un valor Delta inferior a 16, por que lo unico que le puede pasar a
  * nuestra velocidad de fotogramas es que disminuira.
+ * <br><br>
+ * Recursos: <a href="https://www.youtube.com/watch?v=C1_2XlPE6s8">What the heck is "DELTA TIME"? (Frame Independece)</a>
+ * <a href="https://www.youtube.com/watch?v=pctGOMDW-HQ">TIMESTEPS and DELTA TIME</a>
  */
 
 public class Delta {
@@ -19,7 +25,6 @@ public class Delta {
     private static long lastFrame;
 
     private int x = 10, y = 10;
-    private float speed = 0.1f;
 
     /**
      * Obtiene la hora del sistema.
@@ -45,23 +50,10 @@ public class Delta {
         return delta;
     }
 
-    public static void main(String[] args) {
-        try {
-            new Delta().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
-    }
+    private void start() {
 
-    public void start() throws LWJGLException {
-
-        Display.setTitle("Delta Demo");
-        Display.setDisplayMode(new DisplayMode(640, 480));
-        Display.create();
-
-        create();
+        setUpDisplay();
+        setUpOpenGL();
 
         // En la primera vuelta del loop se calcula el tiempo del ultimo fotograma ya que nunca se inicializa
         lastFrame = getTime();
@@ -72,18 +64,16 @@ public class Delta {
 
             int delta = (int) getDelta();
 
-            System.out.println(delta);
+            System.out.println("Delta value: " + delta);
 
             /* ¿Se puede actualizar el movimiento del frame sin el Delta?
              * Si se puede, pero cuando haya una caida o subida de FPS, el movimiento no sera el mismo, es decir si disminuyen los
              * FPS, la velocidad disminuira, y si aumentan, la velocidad sera mas rapida.
              * Al contrario de usar el tiempo delta, el frame llegara al destino en el mismo tiempo, idependientemente de si hay una
-             * caida (frames con saltos) o subida de FPS.
-             *
-             * Explicacion detallada -> https://www.youtube.com/watch?v=pctGOMDW-HQ
-             * Explicacion corta y simple -> https://www.youtube.com/watch?v=C1_2XlPE6s8 */
-            x += delta * speed; // Velocidad horizontal relentizada a 10 veces (0.1)
-            y += delta * speed; // Velocidad vertical
+             * caida (frames con saltos) o subida de FPS. */
+            float speed = 0.1f; // Velocidad relentizada a 10 veces (0.1)
+            x += (int) (delta * speed); // Velocidad horizontal
+            y += (int) (delta * speed); // Velocidad vertical
 
             // Dibuja una caja en las coordenadas xy del primer vertice y en xy del segundo vertice de la esquina
             glRecti(x, y, x + 30, y + 30); // Esto es exactamente igual al modo inmediato
@@ -103,18 +93,30 @@ public class Delta {
 
     }
 
-    private void create() {
+    private void setUpDisplay() {
+        try {
+            Display.setTitle("Delta");
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+            Display.create();
+        } catch (LWJGLException e) {
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
+            Display.destroy();
+            System.exit(1);
+        }
+    }
 
+    private void setUpOpenGL() {
         glMatrixMode(GL_PROJECTION);
         glOrtho(0, 640, 0, 480, 1, -1); // esq inf izquierda
         glMatrixMode(GL_MODELVIEW);
-
     }
 
     private void render() {
-
         glClear(GL_COLOR_BUFFER_BIT);
+    }
 
+    public static void main(String[] args) {
+        new Delta().start();
     }
 
 }

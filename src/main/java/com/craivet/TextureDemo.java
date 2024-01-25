@@ -115,10 +115,15 @@ public class TextureDemo {
     }
 
     private void setUpOpenGL() {
-        glMatrixMode(GL_PROJECTION);
+        glMatrixMode(GL_PROJECTION); // Creacion del lente para la transformacion de la escena 3D a 2D en la pantalla
         glLoadIdentity();
-        glOrtho(0, 640, 480, 0, 1, -1); // Si utilizo la esquina inferior izquierda la textura se voltea
-        glMatrixMode(GL_MODELVIEW);
+        /* La razon por la que tienes que invertir getDY() es porque OpenGL esta destinado a tener el origen en la parte
+         * superior izquierda. */
+        // Creacion del sistema de coordenadas de vertice 2D
+        // Esquina superior izquierda: glOrtho(0, WIDTH, HEIGHT, 0, 1, -1)
+        // Esquina inferior izquierda: glOrtho(0, WIDTH, 0, HEIGHT, 1, -1)
+        glOrtho(0, WIDTH, HEIGHT, 0, 1, -1); // Si utilizo la esquina inferior izquierda la textura se voltea
+        glMatrixMode(GL_MODELVIEW); // Creacion de la camara
         glLoadIdentity();
         // Habilita el texturizado 2D
         glEnable(GL_TEXTURE_2D);

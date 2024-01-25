@@ -1,44 +1,34 @@
-package com.craivet.ejemplos;
+package com.craivet;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import javax.swing.*;
+
+import static com.craivet.Global.HEIGHT;
+import static com.craivet.Global.WIDTH;
 import static org.lwjgl.opengl.GL11.*;
 
-// Controlando los estados del juego
+/**
+ * Controla los estados del juego.
+ */
+
 public class Estados {
 
-    protected boolean running = false;
-
-    private static enum States {
+    private enum States {
         INTRO, MAIN_MENU, GAME
     }
 
     private static States state = States.INTRO;
 
-    public static void main(String[] args) {
-        try {
-            new Estados().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
-    }
+    public void start() {
 
-    public void start() throws LWJGLException {
+        setUpDisplay();
+        setUpOpenGL();
 
-        Display.setTitle("Estados del juego");
-        Display.setDisplayMode(new DisplayMode(640, 480));
-        Display.create();
-
-        create();
-
-        running = true;
-
-        while (running && !Display.isCloseRequested()) {
+        while (!Display.isCloseRequested()) {
 
             render();
             checkInput();
@@ -52,7 +42,19 @@ public class Estados {
 
     }
 
-    private void create() {
+    private void setUpDisplay() {
+        try {
+            Display.setTitle("Game states");
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
+            Display.create();
+        } catch (LWJGLException e) {
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
+            Display.destroy();
+            System.exit(1);
+        }
+    }
+
+    private void setUpOpenGL() {
         glMatrixMode(GL_PROJECTION);
         glOrtho(0, 640, 480, 0, 1, -1); // esq sup izquierda
         glMatrixMode(GL_MODELVIEW);
@@ -76,7 +78,7 @@ public class Estados {
         }
     }
 
-    private static void checkInput() {
+    private void checkInput() {
         switch (state) {
             case INTRO:
                 if (Keyboard.isKeyDown(Keyboard.KEY_A)) state = States.MAIN_MENU;
@@ -89,6 +91,10 @@ public class Estados {
                 if (Keyboard.isKeyDown(Keyboard.KEY_D)) state = States.INTRO;
                 break;
         }
+    }
+
+    public static void main(String[] args) {
+        new Estados().start();
     }
 
 }
