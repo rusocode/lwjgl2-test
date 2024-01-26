@@ -1,20 +1,24 @@
-package com.craivet.ejemplos;
+package com.craivet;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import javax.swing.*;
+
 import static org.lwjgl.opengl.GL11.*;
+import static com.craivet.Global.*;
 
 public class glOrtho {
 
     public static void main(String[] args) {
+
         try {
-            Display.setDisplayMode(new DisplayMode(640, 480));
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.setTitle("Coordinate Systems");
             Display.create();
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();
             System.exit(1);
         }
@@ -31,6 +35,7 @@ public class glOrtho {
 
             glBegin(GL_TRIANGLES);
 
+            // Dibuja un triangulo sin color (blanco)
             glVertex2f(-1, -1); // inf izq
             glVertex2f(1, -1); // inf der
             glVertex2f(1, 1); // sup der
@@ -38,7 +43,7 @@ public class glOrtho {
             glEnd();
 
             Display.update();
-            Display.sync(60);
+            Display.sync(FPS);
         }
 
         Display.destroy();

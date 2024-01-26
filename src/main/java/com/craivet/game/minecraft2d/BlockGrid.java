@@ -1,4 +1,4 @@
-package com.craivet.minecraft2d;
+package com.craivet.game.minecraft2d;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,7 +11,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
-import static com.craivet.minecraft2d.World.*;
+import static com.craivet.game.minecraft2d.World.*;
 
 // Clase visible solo para el paquete
 class BlockGrid {

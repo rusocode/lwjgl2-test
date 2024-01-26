@@ -6,18 +6,20 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-import static org.lwjgl.opengl.GL11.*;
+import javax.swing.*;
 
-// Muestra una aplicacion de desplazamiento lateral para juegos 2D usando glPushMatrix y glPopMatrix
+import static org.lwjgl.opengl.GL11.*;
+import static com.craivet.Global.*;
+
+/**
+ * Muestra una aplicacion de desplazamiento lateral para juegos 2D usando glPushMatrix y glPopMatrix.
+ */
 
 public class SideScrollerDemo {
 
-    private final int width = 640;
-    private final int height = 480;
+    private float translate_x;
 
-    float translate_x;
-
-    private void start() throws LWJGLException {
+    private void start() {
 
         setUpDisplay();
         setUpOpenGL();
@@ -26,12 +28,9 @@ public class SideScrollerDemo {
         translate_x = 0;
 
         while (!Display.isCloseRequested()) {
-
             render();
-
             Display.update();
-            Display.sync(60);
-
+            Display.sync(FPS);
         }
 
         Display.destroy();
@@ -41,20 +40,18 @@ public class SideScrollerDemo {
     private void setUpDisplay() {
         try {
             Display.setTitle("Demostracion de desplazamiento lateral");
-            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create();
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();
             System.exit(1);
         }
     }
 
     private void setUpOpenGL() {
-        /*
-         * Configure una presentacion ortografica donde (0, 0) es la esquina superior izquierda y (640, 480) es la esquina
-         * inferior derecha.
-         */
+        /* Configure una presentacion ortografica donde (0, 0) es la esquina superior izquierda y (640, 480) es la esquina
+         * inferior derecha. */
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, 640, 480, 0, 1, -1);
@@ -75,7 +72,7 @@ public class SideScrollerDemo {
          * Si la barra espaciadora esta presionada y el mouse se encuentra dentro de los limites horizontales de la ventana,
          * entonces se aumenta/disminuye el translate_x por el movimiento dinamico X del mouse.
          */
-        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && Mouse.getX() >= 0 && Mouse.getX() < width) translate_x += Mouse.getDX();
+        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE) && Mouse.getX() >= 0 && Mouse.getX() < WIDTH) translate_x += Mouse.getDX();
 
         // Recupera las coordenadas "verdaderas" del mouse
         int mousex = Mouse.getX();
@@ -102,13 +99,7 @@ public class SideScrollerDemo {
     }
 
     public static void main(String[] args) {
-        try {
-            new SideScrollerDemo().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
+        new SideScrollerDemo().start();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.craivet.minecraft2d;
+package com.craivet.game.minecraft2d;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

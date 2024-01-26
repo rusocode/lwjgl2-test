@@ -1,4 +1,4 @@
-package com.craivet.pong;
+package com.craivet.game.pong;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
