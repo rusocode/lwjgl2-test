@@ -130,23 +130,25 @@ public class ThreeDeeDemo {
     private void setUpOpenGL() {
 
         glMatrixMode(GL_PROJECTION);
+
         glLoadIdentity();
 
-        /* Crea una perspectiva con un angulo de 30 grados (campo de vision), relacion de aspecto de width/height, 0.001f near
-         * (cerca) y 100 zFar (lejos). */
+        /* Crea una perspectiva con un angulo de 60 grados (campo de vision o FOV), relacion de aspecto de width/height, 0.001f
+         * near y 100 far. */
         // +x esta a la derecha
         // +y esta en la cima
         // +z es para la camara
-        gluPerspective((float) 30, 640f / 480f, 0.001f, 100); // Diferencia entre el angulo y el far
+        gluPerspective((float) 60, (float) WIDTH / HEIGHT, 0.001f, 100);
 
         glMatrixMode(GL_MODELVIEW);
 
-        // Se asegura de que los puntos mas cercanos a la camara se muestren delante de los puntos mas alejados
+        /* Se asegura de que los puntos mas cercanos a la camara se muestren delante de los puntos mas alejados. Los juegos 2D
+         * generalmente no requieren pruebas de profundidad. */
         glEnable(GL_DEPTH_TEST);
     }
 
     private void setUpEntities() {
-        // Crea un array de Point con 1000 posiciones
+        // Crea un array de Point
         points = new Point[1000];
         Random random = new Random();
 
@@ -167,7 +169,7 @@ public class ThreeDeeDemo {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Empuja la pantalla hacia adentro a la velocidad especificada
-        glTranslatef(0, 0, speed); // update?
+        glTranslatef(0, 0, speed);
 
         glBegin(GL_POINTS);
         // Itera cada punto y lo dibuja en las coordenas aleatorias
@@ -182,10 +184,8 @@ public class ThreeDeeDemo {
         if (Keyboard.isKeyDown(Keyboard.KEY_UP)) speed += 0.01f; // Aumenta la velocidad
         if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) speed -= 0.01f; // Disminuye la velocidad
 
-        // Iterar los eventos del teclado
         while (Keyboard.next()) {
-            if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) speed = 0f; // Restablece la velocidad a cero
-
+            if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) speed = 0;
             // Restablece la velocidad a cero y restablece la posicion
             if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
                 speed = 0;

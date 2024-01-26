@@ -85,9 +85,6 @@ public class SimpleDisplayApp {
      */
     private void setUpOpenGL() {
 
-        // Los juegos 2D generalmente no requieren pruebas de profundidad
-        // glDisable(GL_DEPTH_TEST);
-
         // Habilita la combinacion
         // glEnable(GL_BLEND);
         // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -97,7 +94,6 @@ public class SimpleDisplayApp {
          * similar a modelview. */
         glMatrixMode(GL_PROJECTION); // Lente
 
-        // Inicializa "projection"
         // glLoadIdentity(); // Restablece cualquier matriz de proyeccion anterior
 
         /* Ingrese el estado requerido para modificar la proyeccion. Tenga en cuenta que, a diferencia de Java2D, el sistema de
