@@ -1,4 +1,6 @@
-package com.craivet._3D;
+package com.craivet;
+
+import javax.swing.*;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -6,8 +8,9 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import static org.lwjgl.opengl.GL11.*;
-
 import static org.lwjgl.util.glu.GLU.gluPerspective;
+
+import static com.craivet.Global.*;
 
 import java.util.Random;
 
@@ -82,32 +85,16 @@ import java.util.Random;
  * En conclusion, los graficos por computadora son principalmente matematicas aplicadas a un programa de computadora cuyo
  * proposito es generar una imagen (fotorreal o no) a la velocidad mas rapida posible (y con la precision de la que las
  * computadoras son capaces).
- * 
  */
 
 public class ThreeDeeDemo {
 
-    private final int width = 640;
-    private final int height = 480;
-
     private Point[] points;
 
-    Random random;
-
-    // Velocidad a la que viaja la "camara"
+    // Velocidad a la que viaja la camara
     private float speed;
 
-    public static void main(String[] args) {
-        try {
-            new ThreeDeeDemo().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
-    }
-
-    private void start() throws LWJGLException {
+    private void start() {
 
         setUpDisplay();
         setUpOpenGL();
@@ -120,7 +107,7 @@ public class ThreeDeeDemo {
             input();
 
             Display.update();
-            Display.sync(60);
+            Display.sync(FPS);
 
         }
 
@@ -131,10 +118,10 @@ public class ThreeDeeDemo {
     private void setUpDisplay() {
         try {
             Display.setTitle("3D");
-            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create();
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();
             System.exit(1);
         }
@@ -145,14 +132,12 @@ public class ThreeDeeDemo {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 
-        /*
-         * Crea una perspectiva con un angulo de 30 grados (campo de vision), relacion de aspecto de 640/480, 0.001f zNear
-         * (cerca) y 100 zFar (lejos).
-         */
+        /* Crea una perspectiva con un angulo de 30 grados (campo de vision), relacion de aspecto de width/height, 0.001f near
+         * (cerca) y 100 zFar (lejos). */
         // +x esta a la derecha
         // +y esta en la cima
         // +z es para la camara
-        gluPerspective((float) 30, 640f / 480f, 0.001f, 100); // Diferencia entre el angulo y el zFar
+        gluPerspective((float) 30, 640f / 480f, 0.001f, 100); // Diferencia entre el angulo y el far
 
         glMatrixMode(GL_MODELVIEW);
 
@@ -163,7 +148,7 @@ public class ThreeDeeDemo {
     private void setUpEntities() {
         // Crea un array de Point con 1000 posiciones
         points = new Point[1000];
-        random = new Random();
+        Random random = new Random();
 
         // Crea un punto con:
         // x aleatoria entre -50 y +50
@@ -175,7 +160,6 @@ public class ThreeDeeDemo {
     }
 
     private void update() {
-        // update()
     }
 
     private void render() {
@@ -222,6 +206,11 @@ public class ThreeDeeDemo {
             this.y = y;
             this.z = z;
         }
+
+    }
+
+    public static void main(String[] args) {
+        new ThreeDeeDemo().start();
     }
 
 }

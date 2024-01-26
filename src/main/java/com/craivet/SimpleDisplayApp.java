@@ -92,8 +92,12 @@ public class SimpleDisplayApp {
         // glEnable(GL_BLEND);
         // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+        /* Configura una presentacion ortografica donde (0, 0) es la esquina superior izquierda y (WIDTH, HEIGHT) es la esquina
+         * inferior derecha. La matriz de proyeccion controla la perspectiva aplicada a las primitivas; se utiliza de forma
+         * similar a modelview. */
         glMatrixMode(GL_PROJECTION); // Lente
 
+        // Inicializa "projection"
         // glLoadIdentity(); // Restablece cualquier matriz de proyeccion anterior
 
         /* Ingrese el estado requerido para modificar la proyeccion. Tenga en cuenta que, a diferencia de Java2D, el sistema de
@@ -112,6 +116,7 @@ public class SimpleDisplayApp {
         // left = xmin, right = xmax, bottom = ymin, top = ymax, near = zmin, far = zmax
         glOrtho(0, WIDTH, 0, HEIGHT, 1, -1);
 
+        // Se establece la matriz modelview, que controla la posicion de la camara respecto a las primitivas que renderizamos
         glMatrixMode(GL_MODELVIEW); // Camara
 
         // Establece claro a negro transparente
