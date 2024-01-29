@@ -1,47 +1,45 @@
 package com.craivet.rendered;
 
+import java.nio.FloatBuffer;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-import java.nio.FloatBuffer;
+import javax.swing.*;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 
+import static com.craivet.Global.*;
+
 /**
  * Renderiza un triangulo de color usando un objeto de buffer de vertice (vertex buffer object).
- *
  */
 
 public class VBO {
 
-    private final int width = 640;
-    private final int height = 480;
 
     private final int amountOfVertices = 3;
     private final int vertexSize = 3;
     private final int colorSize = 3;
 
-    private FloatBuffer vertexData;
-    private FloatBuffer colorData;
-
     // Administradores de memoria?
     private int vboVertexHandle;
     private int vboColorHandle;
 
-    private void start() throws LWJGLException {
+    private void start() {
 
         setUpDisplay();
         setUpOpenGL();
 
-        vertexData = BufferUtils.createFloatBuffer(amountOfVertices * vertexSize);
-        vertexData.put(new float[] { -0.5f, -0.5f, 0, 0.5f, -0.5f, 0, 0.5f, 0.5f, 0 });
+        FloatBuffer vertexData = BufferUtils.createFloatBuffer(amountOfVertices * vertexSize);
+        vertexData.put(new float[]{-0.5f, -0.5f, 0, 0.5f, -0.5f, 0, 0.5f, 0.5f, 0});
         vertexData.flip();
 
-        colorData = BufferUtils.createFloatBuffer(amountOfVertices * colorSize);
-        colorData.put(new float[] { 1, 0, 0, 0, 1, 0, 0, 0, 1 });
+        FloatBuffer colorData = BufferUtils.createFloatBuffer(amountOfVertices * colorSize);
+        colorData.put(new float[]{1, 0, 0, 0, 1, 0, 0, 0, 1});
         colorData.flip();
 
         vboVertexHandle = glGenBuffers();
@@ -59,7 +57,7 @@ public class VBO {
             render();
 
             Display.update();
-            Display.sync(60);
+            Display.sync(FPS);
 
         }
 
@@ -70,10 +68,10 @@ public class VBO {
     private void setUpDisplay() {
         try {
             Display.setTitle("Vertex Buffer Demo");
-            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create();
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();
             System.exit(1);
         }
@@ -106,13 +104,7 @@ public class VBO {
     }
 
     public static void main(String[] args) {
-        try {
-            new VBO().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
+        new VBO().start();
     }
 
 }

@@ -1,6 +1,5 @@
-package com.craivet.entidades;
+package com.craivet.entities;
 
-// Metodos principales
 public interface Entity {
 
     void draw();

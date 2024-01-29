@@ -6,7 +6,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-import com.craivet.entidades.AbstractMovableEntity;
+import com.craivet.entities.AbstractMovableEntity;
 
 import static org.lwjgl.opengl.GL11.*;
 

@@ -4,21 +4,22 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import javax.swing.*;
+
 import static org.lwjgl.opengl.GL11.*;
+
+import static com.craivet.Global.*;
+
 
 /**
  * Renderiza un triangulo de color usando listas de visualizacion.
- *
  */
 
 public class DisplayLists {
 
-    private final int width = 640;
-    private final int height = 480;
-
     private int displayListHandle;
 
-    private void start() throws LWJGLException {
+    private void start() {
 
         setUpDisplay();
         setUpOpenGL();
@@ -41,7 +42,7 @@ public class DisplayLists {
             render();
 
             Display.update();
-            Display.sync(60);
+            Display.sync(FPS);
 
         }
 
@@ -53,10 +54,10 @@ public class DisplayLists {
     private void setUpDisplay() {
         try {
             Display.setTitle("Display Lists Demo");
-            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create();
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();
             System.exit(1);
         }
@@ -71,21 +72,12 @@ public class DisplayLists {
     }
 
     private void render() {
-
         glClear(GL_COLOR_BUFFER_BIT);
-
         glCallList(displayListHandle);
-
     }
 
     public static void main(String[] args) {
-        try {
-            new DisplayLists().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
+        new DisplayLists().start();
     }
 
 }

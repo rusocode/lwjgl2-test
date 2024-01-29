@@ -1,42 +1,40 @@
 package com.craivet.rendered;
 
+import javax.swing.*;
+import java.nio.FloatBuffer;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import static org.lwjgl.opengl.GL11.*;
-
-import java.nio.FloatBuffer;
+import static com.craivet.Global.*;
 
 /**
  * Renderiza un triangulo de color usando un objeto de matriz de vertice (vertex array object).
- *
  */
 
 public class VAO {
 
-    private final int width = 640;
-    private final int height = 480;
-
     private final int amountOfVertices = 3; // Cantidad de vertices (puntos)
-    private final int vertexSize = 2; // Tama�o del vertice
-    private final int colorSize = 3; // Tama�o del color
+    private final int vertexSize = 2; // Tamanio del vertice
+    private final int colorSize = 3; // Tamanio del color
 
     private FloatBuffer vertexData; // Datos del vertice
     private FloatBuffer colorData; // Datos del color
 
-    private void start() throws LWJGLException {
+    private void start() {
 
         setUpDisplay();
         setUpOpenGL();
 
         vertexData = BufferUtils.createFloatBuffer(amountOfVertices * vertexSize);// Crea un bufer de 6 posiciones
-        vertexData.put(new float[] { -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f }); // Crea un array con los vertices
+        vertexData.put(new float[]{-0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f}); // Crea un array con los vertices
         vertexData.flip(); // Voltea el bufer a 0
 
         colorData = BufferUtils.createFloatBuffer(amountOfVertices * colorSize);
-        colorData.put(new float[] { 1, 0, 0, 0, 1, 0, 0, 0, 1 });
+        colorData.put(new float[]{1, 0, 0, 0, 1, 0, 0, 0, 1});
         colorData.flip();
 
         while (!Display.isCloseRequested()) {
@@ -44,7 +42,7 @@ public class VAO {
             render();
 
             Display.update();
-            Display.sync(60);
+            Display.sync(FPS);
 
         }
 
@@ -55,10 +53,10 @@ public class VAO {
     private void setUpDisplay() {
         try {
             Display.setTitle("Vertex Arrays Demo");
-            Display.setDisplayMode(new DisplayMode(width, height));
+            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create();
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();
             System.exit(1);
         }
@@ -90,13 +88,7 @@ public class VAO {
     }
 
     public static void main(String[] args) {
-        try {
-            new VAO().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
+        new VAO().start();
     }
 
 }

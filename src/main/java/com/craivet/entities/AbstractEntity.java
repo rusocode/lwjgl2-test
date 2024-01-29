@@ -1,10 +1,11 @@
-package com.craivet.entidades;
+package com.craivet.entities;
 
 import java.awt.Rectangle;
 
-// Valores de entidades absolutas
+/**
+ * Clase puente para evitar sobreescribir todos los metodos de la interfaz Entity.
+ */
 
-// Clase puente para evitar sobreescribir todos los metodos de la interfaz Entity
 public abstract class AbstractEntity implements Entity {
 
     protected double x;
@@ -68,10 +69,8 @@ public abstract class AbstractEntity implements Entity {
 
     @Override
     public boolean intersects(Entity other) {
-
         // Establece los limites para la caja creada en la x, y, ancho y alto especificados
         hitbox.setBounds((int) x, (int) y, (int) width, (int) height);
-
         // Comprueba si la caja se cruza con el interior de la entidad recibida (point)
         return hitbox.intersects(other.getX(), other.getY(), other.getWidth(), other.getHeight());
     }

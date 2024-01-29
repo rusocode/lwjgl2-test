@@ -1,6 +1,5 @@
-package com.craivet.entidades;
+package com.craivet.entities;
 
-// X e Y movibles
 public interface MoveableEntity extends Entity {
 
     double getDX();

@@ -89,7 +89,9 @@ public class SimpleDisplayApp {
         // glEnable(GL_BLEND);
         // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        /* Configura una presentacion ortografica donde (0, 0) es la esquina superior izquierda y (WIDTH, HEIGHT) es la esquina
+        /* OpenGL utiliza varias matrices de 4 x 4 para transformaciones; GL_MODELVIEW, GL_PROJECTION, GL_TEXTURE y GL_COLOR.
+         * Estas matrices transforman tanto los datos geometricos como los de imagen antes del proceso de rasterizacion OpenGL.
+         * Configura una presentacion ortografica donde (0, 0) es la esquina superior izquierda y (WIDTH, HEIGHT) en la esquina
          * inferior derecha. La matriz de proyeccion controla la perspectiva aplicada a las primitivas; se utiliza de forma
          * similar a modelview. */
         glMatrixMode(GL_PROJECTION); // Lente
@@ -109,8 +111,8 @@ public class SimpleDisplayApp {
          * bottom left = (-1, -1)
          * bottom right = (1, -1) */
 
-        // left = xmin, right = xmax, bottom = ymin, top = ymax, near = zmin, far = zmax
-        glOrtho(0, WIDTH, 0, HEIGHT, 1, -1);
+        // El metodo glOrtho multiplica la matriz actual por una matriz ortografica
+        glOrtho(0, WIDTH, 0, HEIGHT, 1, -1); // left = xmin, right = xmax, bottom = ymin, top = ymax, near = zmin, far = zmax
 
         // Se establece la matriz modelview, que controla la posicion de la camara respecto a las primitivas que renderizamos
         glMatrixMode(GL_MODELVIEW); // Camara
@@ -127,7 +129,6 @@ public class SimpleDisplayApp {
     private void render() {
         // Borra el contenido 2D de la ventana (limpia la pantalla)
         glClear(GL_COLOR_BUFFER_BIT);
-
 
         /* Este metodo acepta un solo argumento que especifica como se interpretan los vertices. Como esta primitiva requiere
          * cuatro vertices, tendremos que llamar a glVertex cuatro veces. Los metodos glBegin y glEnd delimitan los vertices que
