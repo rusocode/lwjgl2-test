@@ -15,9 +15,14 @@ import static org.lwjgl.opengl.GL11.*;
  * sera la velocidad de fotogramas. Cuanto menor sea el Delta, mayor sera la velocidad de fotogramas. Si la velocidad de
  * fotogramas esta limitada a 60 FPS, NUNCA deberia existir un valor Delta inferior a 16, por que lo unico que le puede pasar a
  * nuestra velocidad de fotogramas es que disminuira.
+ * <p>
+ * Algo de lo que me di cuenta, es que especificando la cantidad de actualizaciones por segundo desde {@code Display.sync(FPS)}
+ * no haria falta determinar el delta, ya que de eso se encarga el metodo sync. La ventaja de esto es que no haria falta multiplicar
+ * el delta por la velocidad.
  * <br><br>
  * Recursos: <a href="https://www.youtube.com/watch?v=C1_2XlPE6s8">What the heck is "DELTA TIME"? (Frame Independece)</a>
  * <a href="https://www.youtube.com/watch?v=pctGOMDW-HQ">TIMESTEPS and DELTA TIME</a>
+ * <a href="https://www.parallelcube.com/es/2017/10/25/por-que-necesitamos-utilizar-delta-time/#:~:text=Delta%2520time%2520(%25CE%2594t)%25">¿Por que necesitamos utilizar Delta Time?</a>
  */
 
 public class Delta {
@@ -85,7 +90,7 @@ public class Delta {
              *
              * NOTA: Al pasarle menos FPS usando el Delta, la velocidad del frame no cumple el mismo tiempo que con FPS mas altos,
              * ¿Por que?. */
-            Display.sync(60);
+            Display.sync(FPS);
 
         }
 

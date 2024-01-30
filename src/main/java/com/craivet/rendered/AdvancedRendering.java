@@ -96,7 +96,7 @@ public class AdvancedRendering {
             input();
 
             Display.update();
-            Display.sync(30);
+            Display.sync(FPS);
         }
 
         // Elimina la lista de visualizacion
@@ -124,7 +124,7 @@ public class AdvancedRendering {
     private void setUpOpenGL() {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        // Configura el far en 1_000_000_000_000 para ver todos los puntos (propositos de evaluacion comparativa)
+        // Configura el far para ver todos los puntos (propositos de evaluacion comparativa)
         gluPerspective((float) 30, (float) Display.getWidth() / Display.getHeight(), 0.001f, 10000);
         glMatrixMode(GL_MODELVIEW);
         // Vuelve a verificar la validez del dibujo 3D
@@ -152,10 +152,9 @@ public class AdvancedRendering {
         delta = getDelta() / 16f;
 
         // Empuja la pantalla hacia adentro a la velocidad especificada
-        glTranslatef(0, 0, speed * delta);
+        glTranslatef(0, 0, speed);
 
         switch (mode) {
-
             case DISPLAY_LISTS:
                 // Dibuja la lista de visualizacion
                 glCallList(displayList);
@@ -193,8 +192,8 @@ public class AdvancedRendering {
     }
 
     private void input() {
-        if (Keyboard.isKeyDown(Keyboard.KEY_UP)) speed += 0.01f * delta;
-        if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) speed -= 0.01f * delta;
+        if (Keyboard.isKeyDown(Keyboard.KEY_UP)) speed += 0.01f;
+        if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) speed -= 0.01f;
         while (Keyboard.next()) {
             if (Keyboard.isKeyDown(Keyboard.KEY_C)) {
                 speed = 0;
@@ -213,6 +212,7 @@ public class AdvancedRendering {
         final float x;
         final float y;
         final float z;
+
         public Point(float x, float y, float z) {
             this.x = x;
             this.y = y;

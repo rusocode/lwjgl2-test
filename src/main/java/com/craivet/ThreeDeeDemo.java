@@ -180,10 +180,8 @@ public class ThreeDeeDemo {
     }
 
     private void input() {
-
         if (Keyboard.isKeyDown(Keyboard.KEY_UP)) speed += 0.01f; // Aumenta la velocidad
         if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) speed -= 0.01f; // Disminuye la velocidad
-
         while (Keyboard.next()) {
             if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) speed = 0;
             // Restablece la velocidad a cero y restablece la posicion
@@ -191,22 +189,18 @@ public class ThreeDeeDemo {
                 speed = 0;
                 glLoadIdentity();
             }
-
         }
     }
 
     private static class Point {
-
         final float x;
         final float y;
         final float z;
-
         public Point(float x, float y, float z) {
             this.x = x;
             this.y = y;
             this.z = z;
         }
-
     }
 
     public static void main(String[] args) {

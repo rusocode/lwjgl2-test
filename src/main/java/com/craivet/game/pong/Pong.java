@@ -8,13 +8,12 @@ import org.lwjgl.opengl.DisplayMode;
 
 import com.craivet.entities.AbstractMovableEntity;
 
+import javax.swing.*;
+
 import static org.lwjgl.opengl.GL11.*;
+import static com.craivet.Global.*;
 
 public class Pong {
-
-    // Atributos pertenecientes a la clase
-    private static final int WIDTH = 640;
-    private static final int HEIGHT = 480;
 
     private static Bat bat;
     private static final int BAT_WIDTH = 10;
@@ -26,17 +25,7 @@ public class Pong {
 
     private static long lastFrame;
 
-    public static void main(String[] args) {
-        try {
-            new Pong().start();
-        } catch (LWJGLException e) {
-            e.printStackTrace();
-            Display.destroy();
-            System.exit(1);
-        }
-    }
-
-    public void start() throws LWJGLException {
+    public void start() {
 
         setUpDisplay();
         setUpOpenGL();
@@ -49,12 +38,10 @@ public class Pong {
             update(Delta.getDelta()); // Actualiza la nueva posicion
             render(); // Borra la bola de la posicion anterior y la dibuja en la nueva posicion
 
-            // Controla las entradas del usuario
             input();
 
             Display.update();
-            // Mientras mas bajo sean los FPS mayor sera el delta
-            Display.sync(60);
+            Display.sync(FPS); // Mientras mas bajo sean los FPS mayor sera el delta
 
             /* Sin Delta */
             // El tiempo que tardo la bola en colisionar a 60 fps fue de 5 segundos
@@ -72,61 +59,49 @@ public class Pong {
 
     }
 
-    private static void setUpDisplay() {
+    private void setUpDisplay() {
         try {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.setTitle("Pong");
             Display.create();
         } catch (LWJGLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error", e.getMessage(), JOptionPane.ERROR_MESSAGE);
             Display.destroy();
             System.exit(1);
         }
     }
 
-    private static void setUpOpenGL() {
+    private void setUpOpenGL() {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, 640, 0, 480, 1, -1);
         glMatrixMode(GL_MODELVIEW);
     }
 
-    private static void setUpEntities() {
-
-        bat = new Bat(10, HEIGHT / 2 - BAT_HEIGHT / 2, BAT_WIDTH, BAT_HEIGHT); // Ubica la barra en el centro del eje y
-
+    private void setUpEntities() {
+        bat = new Bat(10, (double) HEIGHT / 2 - (double) BAT_HEIGHT / 2, BAT_WIDTH, BAT_HEIGHT); // Ubica la barra en el centro del eje y
         // Ubica la bola en el centro de la ventana y la mueve hacia atras
-        ball = new Ball(WIDTH / 2 - BALL_WIDTH / 2, HEIGHT / 2 - BALL_HEIGHT / 2, BALL_WIDTH, BALL_HEIGHT);
+        ball = new Ball((double) WIDTH / 2 - (double) BALL_WIDTH / 2, (double) HEIGHT / 2 - (double) BALL_HEIGHT / 2, BALL_WIDTH, BALL_HEIGHT);
         ball.setDX(-0.1);
-
     }
 
-    private static void setUpTimer() {
+    private void setUpTimer() {
         lastFrame = Delta.getTime();
     }
 
     private void update(int delta) {
-
-        // System.out.println(delta);
-
         ball.update(delta);
         bat.update(delta);
-
         if (ball.getX() <= bat.getX() + bat.getWidth() && ball.getX() >= bat.getX() && ball.getY() >= bat.getY()
-                && ball.getY() <= bat.getY() + bat.getHeight()) {
+                && ball.getY() <= bat.getY() + bat.getHeight())
             ball.setDX(0.3);
-        }
-
         // if (ball.intersects(bat)) ball.setDX(0.3);
 
         if (ball.getX() + ball.getWidth() >= WIDTH) ball.setDX(-0.3);
-
     }
 
     private void render() {
-
         glClear(GL_COLOR_BUFFER_BIT);
-
         ball.draw();
         bat.draw();
     }
@@ -135,18 +110,14 @@ public class Pong {
         // Si se presiono te tecla de arriba y la barra no llego al alto de la ventana, entonces...
         if (Keyboard.isKeyDown(Keyboard.KEY_UP) && bat.getY() + bat.getHeight() <= HEIGHT) {
             bat.setDY(0.2);
-
             if (ball.intersects(bat)) {
                 ball.setDX(0.3);
                 ball.setDY(0.3);
             }
-
         } else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) && bat.getY() >= 0) bat.setDY(-0.2);
         else bat.setDY(0); // Para que la barra quede en su lugar
     }
 
-    /* https://www.parallelcube.com/es/2017/10/25/por-que-necesitamos-utilizar-delta-time/#:~:text=Delta%20time%20(%CE%94t)%
-     * 20es%20el,el%20siguiente%20diagrama%20de%20flujo.&text=Cuando%20el%20juego%20termina%20el%20programa%20finaliza. */
     private static class Delta {
 
         private static long getTime() {
@@ -184,6 +155,10 @@ public class Pong {
         public void draw() {
             glRectd(x, y, x + width, y + height);
         }
+    }
+
+    public static void main(String[] args) {
+        new Pong().start();
     }
 
 }
