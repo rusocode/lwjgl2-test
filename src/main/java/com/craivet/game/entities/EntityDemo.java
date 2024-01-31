@@ -1,4 +1,4 @@
-package com.craivet.entities;
+package com.craivet.game.entities;
 
 import javax.swing.*;
 
@@ -133,7 +133,7 @@ public class EntityDemo {
         }
 
         @Override
-        public void update(int delta) {
+        public void update(double delta) {
         }
 
     }

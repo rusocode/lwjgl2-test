@@ -1,4 +1,4 @@
-package com.craivet.entities;
+package com.craivet.game.entities;
 
 public abstract class AbstractMovableEntity extends AbstractEntity implements MoveableEntity {
 
@@ -13,7 +13,7 @@ public abstract class AbstractMovableEntity extends AbstractEntity implements Mo
     }
 
     @Override
-    public void update(int delta) {
+    public void update(double delta) {
         // La velocidad se multiplica por delta para obtener un movimiento independiente de la velocidad de fotogramas
         this.x += dx * delta; // x = desplazamiento, dx = velocidad, delta = tiempo
         this.y += dy * delta;

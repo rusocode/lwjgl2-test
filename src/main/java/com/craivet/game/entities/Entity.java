@@ -1,10 +1,10 @@
-package com.craivet.entities;
+package com.craivet.game.entities;
 
 public interface Entity {
 
     void draw();
 
-    void update(int delta);
+    void update(double delta);
 
     void setLocation(double x, double y);
 

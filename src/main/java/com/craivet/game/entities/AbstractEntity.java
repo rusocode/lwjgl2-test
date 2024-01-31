@@ -1,4 +1,4 @@
-package com.craivet.entities;
+package com.craivet.game.entities;
 
 import java.awt.Rectangle;
 

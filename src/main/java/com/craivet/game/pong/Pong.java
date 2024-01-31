@@ -6,22 +6,32 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-import com.craivet.entities.AbstractMovableEntity;
+import com.craivet.game.entities.AbstractMovableEntity;
 
 import javax.swing.*;
 
 import static org.lwjgl.opengl.GL11.*;
 import static com.craivet.Global.*;
 
+/**
+ * <i>Sin Delta</i>
+ * <ul>
+ * <li>El tiempo que tardo la bola en colisionar a 60 fps fue de 5 segundos
+ * <li>El tiempo que tardo la bola en colisionar a 30 fps fue de 10 segundos
+ * </ul>
+ * <i>Con Delta</i>
+ * <ul>
+ * <li>El tiempo que tardo la bola en colisionar a 60 fps fue de 5 segundos
+ * <li>El tiempo que tardo la bola en colisionar a 30 fps fue de 5 segundos
+ * </ul>
+ * En conclusion, con valores de FPS menores el Delta se incrementa, los desplazamientos en estos frames son mayores pero tenemos
+ * menos frames, por lo tanto el resultado de la suma final es el mismo. Ahora podemos decir que el juego es <b>framerate independente</b>.
+ */
+
 public class Pong {
 
     private static Bat bat;
-    private static final int BAT_WIDTH = 10;
-    private static final int BAT_HEIGHT = 80;
-
     private static Ball ball;
-    private static final int BALL_WIDTH = 10;
-    private static final int BALL_HEIGHT = 10;
 
     private static long lastFrame;
 
@@ -34,24 +44,14 @@ public class Pong {
 
         while (!Display.isCloseRequested()) {
 
-            // Esto sucede tan rapido que da un efecto de movimiento
-            update(Delta.getDelta()); // Actualiza la nueva posicion
-            render(); // Borra la bola de la posicion anterior y la dibuja en la nueva posicion
-
+            // Actualiza (usando un valor delta) y dibuja la nueva posicion de las entidades
+            update(Delta.getDelta());
+            render();
             input();
 
+            // Cantidad de veces que se actualiza la pantalla del juego por segundo
             Display.update();
             Display.sync(FPS); // Mientras mas bajo sean los FPS mayor sera el delta
-
-            /* Sin Delta */
-            // El tiempo que tardo la bola en colisionar a 60 fps fue de 5 segundos
-            // El tiempo que tardo la bola en colisionar a 30 fps fue de 10 segundos
-            /* Con Delta */
-            // El tiempo que tardo la bola en colisionar a 60 fps fue de 5 segundos
-            // El tiempo que tardo la bola en colisionar a 30 fps fue de 5 segundos
-            /* En conclusion, con valores de FPS menores el Delta se incrementa, los desplazamientos en estos frames son mayores
-             * pero tenemos menos frames, por lo tanto el resultado de la suma final es el mismo. Ahora podemos decir que el juego
-             * es framerate independente. */
 
         }
 
@@ -79,9 +79,11 @@ public class Pong {
     }
 
     private void setUpEntities() {
-        bat = new Bat(10, (double) HEIGHT / 2 - (double) BAT_HEIGHT / 2, BAT_WIDTH, BAT_HEIGHT); // Ubica la barra en el centro del eje y
-        // Ubica la bola en el centro de la ventana y la mueve hacia atras
-        ball = new Ball((double) WIDTH / 2 - (double) BALL_WIDTH / 2, (double) HEIGHT / 2 - (double) BALL_HEIGHT / 2, BALL_WIDTH, BALL_HEIGHT);
+        // Ubica el bate en el centro del eje y
+        bat = new Bat(10, (double) HEIGHT / 2 - (double) 80 / 2, 10, 80);
+        // Ubica la bola en el centro de la ventana
+        ball = new Ball((double) WIDTH / 2 - (double) 10 / 2, (double) HEIGHT / 2 - (double) 10 / 2, 10, 10);
+        // Para que la bola comience a desplazarse hacia la izquierda
         ball.setDX(-0.1);
     }
 
@@ -89,14 +91,12 @@ public class Pong {
         lastFrame = Delta.getTime();
     }
 
-    private void update(int delta) {
+    private void update(double delta) {
         ball.update(delta);
         bat.update(delta);
-        if (ball.getX() <= bat.getX() + bat.getWidth() && ball.getX() >= bat.getX() && ball.getY() >= bat.getY()
-                && ball.getY() <= bat.getY() + bat.getHeight())
-            ball.setDX(0.3);
-        // if (ball.intersects(bat)) ball.setDX(0.3);
-
+        // Si la bola intersecta con el bate
+        if (ball.intersects(bat)) ball.setDX(0.3);
+        // Si la bola llega al limite derecho de la ventana
         if (ball.getX() + ball.getWidth() >= WIDTH) ball.setDX(-0.3);
     }
 
@@ -107,15 +107,10 @@ public class Pong {
     }
 
     private void input() {
-        // Si se presiono te tecla de arriba y la barra no llego al alto de la ventana, entonces...
-        if (Keyboard.isKeyDown(Keyboard.KEY_UP) && bat.getY() + bat.getHeight() <= HEIGHT) {
-            bat.setDY(0.2);
-            if (ball.intersects(bat)) {
-                ball.setDX(0.3);
-                ball.setDY(0.3);
-            }
-        } else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) && bat.getY() >= 0) bat.setDY(-0.2);
-        else bat.setDY(0); // Para que la barra quede en su lugar
+        // Si se presiono te tecla de arriba y el bate no llego al alto de la ventana
+        if (Keyboard.isKeyDown(Keyboard.KEY_UP) && bat.getY() + bat.getHeight() <= HEIGHT) bat.setDY(0.2);
+        else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) && bat.getY() >= 0) bat.setDY(-0.2);
+        else bat.setDY(0); // Para que el bate quede en su lugar cuando no se presiona ninguna tecla
     }
 
     private static class Delta {
@@ -124,10 +119,10 @@ public class Pong {
             return (Sys.getTime() * 1000) / Sys.getTimerResolution();
         }
 
-        private static int getDelta() {
+        private static double getDelta() {
             long currentTime = getTime();
-            int delta = (int) (currentTime - lastFrame);
-            lastFrame = getTime();
+            double delta = currentTime - lastFrame;
+            lastFrame = currentTime;
             return delta;
         }
 
