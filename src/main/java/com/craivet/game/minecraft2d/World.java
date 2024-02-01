@@ -5,24 +5,24 @@ public class World {
     // Textura de 32 pixeles justo para 640 y 480?
     public static final int BLOCK_SIZE = 32;
 
-    // Calcula el cantidad de columnas y filas dependiendo del tama�o de la ventana y la textura
-    public static int columnas = Screen.getWidth() / BLOCK_SIZE;
-    public static int filas = Screen.getHeight() / BLOCK_SIZE;
+    // Calcula el cantidad de columnas y filas dependiendo del tamanio de la ventana y la textura
+    public static int cols = Screen.getWidth() / BLOCK_SIZE;
+    public static int rows = Screen.getHeight() / BLOCK_SIZE;
 
-    public static int getColumnas() {
-        return columnas;
+    public static int getCols() {
+        return cols;
     }
 
-    public static void setColumnas(int columnas) {
-        World.columnas = columnas;
+    public static void setCols(int cols) {
+        World.cols = cols;
     }
 
-    public static int getFilas() {
-        return filas;
+    public static int getRows() {
+        return rows;
     }
 
-    public static void setFilas(int filas) {
-        World.filas = filas;
+    public static void setRows(int rows) {
+        World.rows = rows;
     }
 
 }

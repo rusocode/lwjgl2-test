@@ -18,6 +18,10 @@ import static org.lwjgl.opengl.GL11.*;
 /**
  * getX() devuelve la posicion absoluta del eje x
  * getDX() devuelve el movimiento en el eje x desde la ultima vez que se llamo a getDX()
+ * <p>
+ * Para usar el metodo getEventKey(), es necesario controlar las teclas con un getEventKeyState() ya que asegura de que solo
+ * registre las teclas que se presionan, no las que se liberan. El metodo isKeyDown() se puede usar para verificar las teclas
+ * presionadas, en lugar de presionar una tecla una vez con getKeyEvent().
  */
 
 public class Input {
@@ -72,8 +76,8 @@ public class Input {
 
         System.out.println("x = " + Mouse.getX() + ", y = " + Mouse.getY());
 
-        // Keyboard.next() obtiene el proximo evento del teclado, capturando una sola pulsacion de tecla
-        while (Keyboard.next()) {
+        // Mientras se haya leido un evento del teclado
+        while (Keyboard.next()) { // Keyboard.next() obtiene el proximo evento del teclado, capturando una sola pulsacion de tecla
             if (Keyboard.isKeyDown(Keyboard.KEY_C))
                 // Resta el ancho y alto de la caja a los limites de la ventana para no pasarse de estos
                 shapes.add(new Box((int) (Math.random() * (WIDTH - BOX_WIDHT)), (int) (Math.random() * (HEIGHT - BOX_HEIGHT))));

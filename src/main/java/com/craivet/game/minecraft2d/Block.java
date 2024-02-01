@@ -9,13 +9,15 @@ import com.craivet.TextureDemo;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
+import javax.swing.*;
+
 import static org.lwjgl.opengl.GL11.*;
 
 public class Block {
 
-    private BlockType type;
-    private float x;
-    private float y;
+    private final BlockType type;
+    private final float x;
+    private final float y;
     private Texture texture;
 
     public Block(BlockType type, float x, float y) {
@@ -24,31 +26,16 @@ public class Block {
         this.y = y;
         try {
             // Decodifica la imagen de tipo PNG (en "location") para trabajarla como una textura
-            // this.texture = TextureLoader.getTexture("PNG", new FileInputStream(new File(type.location)));
-            this.texture = TextureLoader.getTexture("PNG", Objects.requireNonNull(TextureDemo.class.getClassLoader().getResourceAsStream(type.location)));
+            texture = TextureLoader.getTexture("PNG", Objects.requireNonNull(TextureDemo.class.getClassLoader().getResourceAsStream(type.location)));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se pudo encontrar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error de I/O", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public BlockType getType() {
-        return type;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    // Dibuja la textura
     public void draw() {
 
-        // Habilita el texturizado 2D
         glEnable(GL_TEXTURE_2D);
 
         // Enlaza la textura pasandole el texturizado y el ID de cada textura para que GL sepa que textura enlazar
@@ -73,6 +60,18 @@ public class Block {
         glEnd();
 
         glPopMatrix();
+    }
+
+    public BlockType getType() {
+        return type;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
 
 }

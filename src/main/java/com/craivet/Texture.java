@@ -102,7 +102,7 @@ public class Texture {
             id = glGenTextures();
 
             // 3) Enlaza la textura
-            glBindTexture(target, id);
+            glBindTexture(target, id); // Enlaza la textura pasandole el texturizado y el ID de cada textura para que GL sepa que textura enlazar
 
             /* Usa una alineacion de 1 para estar seguro. Esto le dice a OpenGL como descomprimir los bytes RGBA que
              * especificaremos. */
